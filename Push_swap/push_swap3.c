@@ -26,7 +26,7 @@ void swap_array(int *x, int *y)
 void mysleep(int time)
 {
 	float q = 0;
-	while (q < time * 2000)
+	while (q < time * 100)
 		q += 0.001;
 }
 
@@ -149,12 +149,7 @@ int sort_three(stack *X, char c)
 int printstacks(stack *A, stack *B, int len, int moves)
 {
 #if 1
-	// if (len > 250)
-	mysleep(2);
-	// else if (len > 50)
-	// 	mysleep(100);
-	// else if (len > 0)
-	// 	mysleep(300);
+	mysleep(20);
 
 	printf("\e[0;32m\n============================================================================\n");
 	int j = 0;
@@ -176,6 +171,7 @@ int printstacks(stack *A, stack *B, int len, int moves)
 	}
 	printf("\n============================================================================\n");
 	printf("number of moves: %d\n", moves);
+	printf("\033[2J");
 #endif
 	return (1);
 }
@@ -297,6 +293,7 @@ int sort_more(stack *A, stack *B, int len)
 			if (A->array_of_nums[0].index >= min && A->array_of_nums[0].index < max)
 			{
 				moves += push(A, B, 'b');
+				printstacks(A, B, 0, moves);
 				if (B->array_of_nums[0].index < (max - min) / 2 + min)
 					moves += rotate(B, 'b');
 				printstacks(A, B, 0, moves);
@@ -330,6 +327,7 @@ int sort_more(stack *A, stack *B, int len)
 				}
 				else
 					moves += rotate(B, 'b');
+				printstacks(A, B, 0, moves);
 			}
 		}
 		else
@@ -339,7 +337,6 @@ int sort_more(stack *A, stack *B, int len)
 				if (B->array_of_nums[0].index == max_len - 1)
 				{
 					moves += push(B, A, 'a');
-
 					before_max_range = 1;
 				}
 				else
@@ -520,12 +517,13 @@ int main(int argc, char **argv)
 		printf("Bad number of moves %d\n", moves);
 	else
 		printf("Good number of moves %d\n", moves);
-	i = 0;
-	while (i < A->lenght)
-	{
-		printf("%d ", A->array_of_nums[i++].value);
-	}
-	printf("\n");
+	// i = 0;
+	// while (i < A->lenght)
+	// {
+	// 	printf("%d ", A->array_of_nums[i].value);
+	// 	i++;
+	// }
+	// printf("\n");
 	if (is_sorted(A) == 0)
 		ft_printf("\033[0;31mwa elchriff verify dakchi 3endek %d < %d\n", A->array_of_nums[i].index, A->array_of_nums[i - 1].index);
 }
