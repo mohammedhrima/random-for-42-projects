@@ -1,4 +1,4 @@
-#include "../Libft/libft.h"
+#include "./Libft/libft.h"
 int moves = 0;
 #define NOT !
 
@@ -126,13 +126,13 @@ int swap(stack *X)
 
 int printstacks(stack *A, stack *B, int len, int moves)
 {
-#if 0
-	// if (len > 250)
-	// 	mysleep(2);
-	// else if (len > 50)
-	// 	mysleep(80);
-	// else if (len > 0)
-	// 	mysleep(300);
+#if 1
+	if (len > 250)
+		mysleep(2);
+	else if (len > 50)
+		mysleep(80);
+	else if (len > 0)
+		mysleep(300);
 
 	printf("\e[0;32m\n============================================================================\n");
 	int j = 0;
@@ -224,7 +224,7 @@ void sort_more(stack *A, stack *B, int len)
 			if (A->array_of_nums[0].index >= min && A->array_of_nums[0].index < max)
 			{
 				moves += push(A, B);
-				ft_printf("pb\n");
+				// ft_printf("pb\n");
 				if (B->array_of_nums[0].index < (max - min) / 2 + min)
 					rb = rotate(B);
 			}

@@ -2,7 +2,7 @@ CC = cc
 SAN = -fsanitize=address -fsanitize=undefined -g3
 SRC = push_swap3.c
 SRC2 = checker.c
-LIB = ../Libft/libft.a
+LIB = ./Libft/libft.a
 OUT = ./push_swap
 OUT2 = ./checker
 RM = rm -rf

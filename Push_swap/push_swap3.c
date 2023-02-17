@@ -1,4 +1,4 @@
-#include "../Libft/libft.h"
+#include "./Libft/libft.h"
 #define NOT !
 // int moves = 0;
 
@@ -21,6 +21,13 @@ void swap_array(int *x, int *y)
 	tmp = *x;
 	*x = *y;
 	*y = tmp;
+}
+
+void mysleep(int time)
+{
+	float q = 0;
+	while (q < time * 2000)
+		q += 0.001;
 }
 
 void sort_array(int *array_of_numbers, int *array_of_indexes, int len)
@@ -73,7 +80,7 @@ int rotate(stack *list, char c)
 		ft_memmove(list->array_of_nums, list->array_of_nums + 1, (list->lenght - 1) * sizeof(num));
 		list->array_of_nums[list->lenght - 1] = tmp;
 		if (c)
-			ft_printf("r%c\n", c);
+			ft_printf("r%c ", c);
 		return (1);
 	}
 	return (0);
@@ -87,7 +94,7 @@ int reverse_rotate(stack *list, char c)
 		ft_memmove(list->array_of_nums + 1, list->array_of_nums, (list->lenght - 1) * sizeof(num));
 		list->array_of_nums[0] = tmp;
 		if (c)
-			ft_printf("r%c\n", c);
+			ft_printf("rr%c ", c);
 		return (1);
 	}
 	return (0);
@@ -103,7 +110,7 @@ int push(stack *src, stack *dest, char c)
 		dest->lenght++;
 		reverse_rotate(dest, 0);
 		dest->array_of_nums[0] = tmp;
-		ft_printf("p%c\n", c);
+		ft_printf("p%c ", c);
 		return (1);
 	}
 	return (0);
@@ -115,7 +122,7 @@ int swap(stack *X, char c)
 	X->array_of_nums[0] = X->array_of_nums[1];
 	X->array_of_nums[1] = tmp;
 	if (c)
-		ft_printf("s%c\n", c);
+		ft_printf("s%c ", c);
 	return (1);
 }
 
@@ -143,9 +150,9 @@ int printstacks(stack *A, stack *B, int len, int moves)
 {
 #if 1
 	// if (len > 250)
-	// 	mysleep(2);
+	mysleep(2);
 	// else if (len > 50)
-	// 	mysleep(80);
+	// 	mysleep(100);
 	// else if (len > 0)
 	// 	mysleep(300);
 
@@ -193,22 +200,34 @@ int sort_five(stack *A, stack *B)
 		{
 			while (A->array_of_nums[0].index < 3)
 				moves += rotate(A, 'a');
+			printstacks(A, B, 0, moves);
 		}
 		else if (A->array_of_nums[A->lenght - i - 1].index >= 3)
 		{
 			while (A->array_of_nums[0].index < 3)
+			{
 				moves += reverse_rotate(A, 'a');
+				printstacks(A, B, 0, moves);
+			}
 		}
 		if (A->array_of_nums[0].index >= 3)
+		{
 			moves += push(A, B, 'b');
+			printstacks(A, B, 0, moves);
+		}
 	}
 	if (B->lenght > 1 && B->array_of_nums[0].index > B->array_of_nums[1].index)
+	{
 		moves += swap(B, 'b');
+		printstacks(A, B, 0, moves);
+	}
 	moves += sort_three(A, 'a');
 	while (B->lenght > 0)
 	{
 		moves += push(B, A, 'a');
+		printstacks(A, B, 0, moves);
 		moves += rotate(A, 'a');
+		printstacks(A, B, 0, moves);
 	}
 	return (moves);
 }
@@ -280,9 +299,11 @@ int sort_more(stack *A, stack *B, int len)
 				moves += push(A, B, 'b');
 				if (B->array_of_nums[0].index < (max - min) / 2 + min)
 					moves += rotate(B, 'b');
+				printstacks(A, B, 0, moves);
 			}
 			else
 				moves += rotate(A, 'a');
+			printstacks(A, B, 0, moves);
 		}
 		min += (len / precision);
 		max += (len / precision);
@@ -318,19 +339,23 @@ int sort_more(stack *A, stack *B, int len)
 				if (B->array_of_nums[0].index == max_len - 1)
 				{
 					moves += push(B, A, 'a');
+
 					before_max_range = 1;
 				}
 				else
 					moves += reverse_rotate(B, 'b');
+				printstacks(A, B, 0, moves);
 			}
 		}
 		if (B->array_of_nums[0].index == max_len)
 		{
 			moves += push(B, A, 'b');
+			printstacks(A, B, 0, moves);
 			max_len--;
 			if (before_max_range)
 			{
 				moves += swap(A, 'a');
+				printstacks(A, B, 0, moves);
 				max_len--;
 			}
 		}
